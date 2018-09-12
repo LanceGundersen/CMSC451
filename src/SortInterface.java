@@ -1,7 +1,3 @@
-/**
- * Created by aargento on 8/25/17.
- */
-
 public interface SortInterface {
 
     void recursiveSort(int[] list) throws UnsortedException;

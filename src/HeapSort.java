@@ -1,5 +1,4 @@
 /**
- * Created by aargento on 8/25/17.
  *
  * Reference: Java heap code adapted from http://www.javacodex.com/Sorting/Heap-Sort
  *
@@ -10,7 +9,7 @@ public class HeapSort implements SortInterface {
     private long time = 0;
 
     @Override
-    public void recursiveSort(int[] list) throws UnsortedException {
+    public void recursiveSort(int[] list) {
         long startTime = System.currentTimeMillis();
         buildHeapRecursive(list);
         recursiveSort(list, list.length-1);
@@ -18,7 +17,7 @@ public class HeapSort implements SortInterface {
     }
 
     @Override
-    public void iterativeSort(int[] list) throws UnsortedException {
+    public void iterativeSort(int[] list) {
         long startTime = System.currentTimeMillis();
         int N = list.length-1;
         buildHeapIterative(list);
