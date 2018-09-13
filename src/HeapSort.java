@@ -1,6 +1,6 @@
 /**
  *
- * Reference: Java heap code adapted from http://www.javacodex.com/Sorting/Heap-Sort
+ * Heap sort reference http://www.javacodex.com/Sorting/Heap-Sort
  *
  */
 

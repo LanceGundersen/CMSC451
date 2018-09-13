@@ -1,8 +1,4 @@
-import javax.swing.*;
-import javax.swing.border.EtchedBorder;
-import java.awt.*;
-
-class BenchmarkSorts {
+public class BenchmarkSorts {
 
     HeapSort heapSort;
 
@@ -45,7 +41,7 @@ class BenchmarkSorts {
         return true;
     }
 
-    void runSorts() throws UnsortedException {
+    public void runSorts() throws UnsortedException {
 
         for (int i = 0; i < dataSet.length; i++) {
 
@@ -56,7 +52,7 @@ class BenchmarkSorts {
                 heapSort.recursiveSort(arrayA);
 
                 if (!sorted(arrayA))
-                    JOptionPane.showMessageDialog(null, "Sorted array not returned by recursive sort", "Recursive Error", JOptionPane.ERROR_MESSAGE);
+                    throw new UnsortedException("Recursive sort did not return a sorted array.\n");
 
                 rArrayCount[i][j] = heapSort.getCount();
                 rArrayTime[i][j] = heapSort.getTime();
@@ -64,7 +60,7 @@ class BenchmarkSorts {
                 heapSort.iterativeSort(arrayB);
 
                 if (!sorted(arrayB))
-                    JOptionPane.showMessageDialog(null, "Sorted array not returned by iterative sort", "Iterative Error", JOptionPane.ERROR_MESSAGE);
+                    throw new UnsortedException("Iterative sort did not return a sorted array.\n");
 
                 iArrayCount[i][j] = heapSort.getCount();
                 iArrayTime[i][j] = heapSort.getTime();
@@ -101,83 +97,40 @@ class BenchmarkSorts {
 
     public void displayReport() {
 
-        // TODO: Return the graphic table
-
-        // Define output label components
-        JTextArea outputLabel = new JTextArea();
-        outputLabel.setEditable(false);
-
-        // Define JPanels
-        JPanel panelOutput = new JPanel();
-        panelOutput.setBorder(new EtchedBorder(EtchedBorder.RAISED));
-        panelOutput.setPreferredSize(new Dimension(690, 175));
-
-        // Add components to Output JPanel
-        panelOutput.add(outputLabel);
-
-        // Define container to group panels
-        Container containerPnlGrp = new Container();
-        containerPnlGrp.setLayout(new BoxLayout(containerPnlGrp, BoxLayout.Y_AXIS));
-        containerPnlGrp.add(panelOutput);
-
-        // Create frame and define parameters of GUI
-        JFrame frameMainGUI = new JFrame();
-        frameMainGUI.setTitle("CMSC 451 Project 1");
-        frameMainGUI.setPreferredSize(new Dimension(970, 395));
-        frameMainGUI.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frameMainGUI.add(containerPnlGrp);
-        frameMainGUI.pack();
-        frameMainGUI.setLocationRelativeTo(null);
-        frameMainGUI.setVisible(true);
-
-        StringBuilder sb = new StringBuilder();
-
-
-        // TODO: Gross!
-        sb.append("\nData\t\t          Iterative\t\t\t\t\t          Recursive\nSet\nSize n\n\n");
-        sb.append("\tAverage\tCoefficient of \tAverage\tCoefficient of\t\tAverage\tCoefficient of \tAverage\tCoefficient of \n");
-        sb.append("\tCritical\tVariance of \tExecution\tVariance of\t\tCritical\tVariance of \tExecution\tVariance of\n");
-        sb.append("\tOperation\tCount\tTime\tTime\t\tOperation\tCount\tTime\tTime\n");
-        sb.append("\tCount\t\t\t\t\tCount\n\n");
+        // TODO: Output to something pretty
 
         for (int i = 0; i < dataSet.length; i++) {
 
             // Data set size n
-            int dssLength = (dataSet[i][0].length);
-            sb.append(dssLength);
-
+            int dataSetSize = (dataSet[i][0].length);
+            
             // ITERATIVE
             // Average critical operation count
-            sb.append("\t").append(iArrayAverageCriticalOperationCount[i]);
+            long l1 = iArrayAverageCriticalOperationCount[i];
 
             // Coefficient of variance of count
             double iterativeVarianceCount = getCoefficientVariance(iArrayCount[i]);
-            sb.append("\t").append(iterativeVarianceCount);
 
             // Average execution time
             double averageIterativeExecutionTime = (iArrayAverageExecutionTime[i]);
-            sb.append("\t").append(averageIterativeExecutionTime);
 
             // Coefficient of variance of time
-            sb.append("\t").append(Math.round(getCoefficientVariance(iArrayTime[i]) * 1000.0) / 1000.0).append("\t");
+            double iterativeCoefficientVariance = Math.round(getCoefficientVariance(iArrayTime[i]) * 1000.0) / 1000.0;
 
             /// RECURSIVE
             // Average critical operation count
-            sb.append("\t").append(rArrayAverageCriticalOperationCount[i]);
+            long l = rArrayAverageCriticalOperationCount[i];
 
             // Coefficient of variance of count
             double recursiveCountSd = Math.round(getCoefficientVariance(rArrayCount[i]) * 1000.0) / 1000.0;
-            sb.append("\t").append(recursiveCountSd);
 
             // Average execution time
             double averageRecursiveExecutionTime = (rArrayAverageExecutionTime[i]);
-            sb.append("\t").append(averageRecursiveExecutionTime);
 
             // Coefficient of variance of time
-            sb.append("\t").append(Math.round(getCoefficientVariance(rArrayTime[i]) * 1000.0) / 1000.0).append("\n");
+            double recursiveCoefficientVariance = Math.round(getCoefficientVariance(rArrayTime[i]) * 1000.0) / 1000.0;
         }
 
-        outputLabel.setText(String.valueOf(sb));
 
     }
 

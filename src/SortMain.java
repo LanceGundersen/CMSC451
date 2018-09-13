@@ -32,6 +32,9 @@ public class SortMain extends JFrame {
         }
     }
 
+    /**
+     * JVM Loader reference https://www.baeldung.com/java-jvm-warmup
+     */
     private static class jvmLoader {
         static void load() {
             for (int i = 0; i < 10000; i++) {
