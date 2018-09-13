@@ -1,30 +1,40 @@
-import javax.swing.*;
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
-public class SortMain extends JFrame {
+public class SortMain extends Application {
 
     static {
         jvmLoader.load();
     }
 
-    private SortMain() {
+    public static void main(String[] args) {
+
+        Application.launch(args);
+
+        //        jvmLoader.load();
+
+        new SortMain();
+
+    }
+
+    public void start(Stage stage) {
 
         int[] dataSetSizes = new int[]{500, 1000, 1500, 2000};
         BenchmarkSorts benchmarkSorts = new BenchmarkSorts(dataSetSizes);
         try {
             benchmarkSorts.runSorts();
-            benchmarkSorts.displayReport();
-        } catch (UnsortedException e) {
+
+            VBox root = benchmarkSorts.displayReport();
+
+            Scene scene = new Scene(root, 800, 400);
+            stage.setScene(scene);
+
+            stage.show();
+        } catch (Exception e) {
             System.out.print(e.getMessage());
         }
-
-    }
-
-    public static void main(String[] args) {
-
-//        jvmLoader.load();
-
-        new SortMain();
-
     }
 
     static class jvmWarmUp {
@@ -43,4 +53,6 @@ public class SortMain extends JFrame {
             }
         }
     }
+
+
 }
