@@ -8,15 +8,15 @@ public class BenchmarkSorts {
 
     private int[][][] dataSet;
 
-    private long[] iArrayAverageCriticalOperationCount;
-    private long[] iArrayAverageExecutionTime;
-    private long[][] iArrayCount;
-    private long[][] iArrayTime;
+    private long[] iterativeArrayAverageCriticalOperationCount;
+    private long[] iterativeArrayAverageExecutionTime;
+    private long[][] iterativeArrayCount;
+    private long[][] iterativeArrayTime;
 
-    private long[] rArrayAverageCriticalOperationCount;
-    private long[] rArrayAverageExecutionTime;
-    private long[][] rArrayCount;
-    private long[][] rArrayTime;
+    private long[] recursiveArrayAverageCriticalOperationCount;
+    private long[] recursiveArrayAverageExecutionTime;
+    private long[][] recursiveArrayCount;
+    private long[][] recursiveArrayTime;
 
     BenchmarkSorts(int[] sizes) {
 
@@ -28,15 +28,15 @@ public class BenchmarkSorts {
             for (int j = 0; j < dataSet[i].length; j++)
                 dataSet[i][j] = randomizedData(sizes[i]);
 
-            iArrayAverageCriticalOperationCount = new long[dataSet.length];
-            iArrayAverageExecutionTime = new long[dataSet.length];
-            rArrayAverageCriticalOperationCount = new long[dataSet.length];
-            rArrayAverageExecutionTime = new long[dataSet.length];
+            iterativeArrayAverageCriticalOperationCount = new long[dataSet.length];
+            iterativeArrayAverageExecutionTime = new long[dataSet.length];
+            recursiveArrayAverageCriticalOperationCount = new long[dataSet.length];
+            recursiveArrayAverageExecutionTime = new long[dataSet.length];
         }
-        iArrayCount = new long[dataSet.length][dataSet[0].length];
-        iArrayTime = new long[dataSet.length][dataSet[0].length];
-        rArrayCount = new long[dataSet.length][dataSet[0].length];
-        rArrayTime = new long[dataSet.length][dataSet[0].length];
+        iterativeArrayCount = new long[dataSet.length][dataSet[0].length];
+        iterativeArrayTime = new long[dataSet.length][dataSet[0].length];
+        recursiveArrayCount = new long[dataSet.length][dataSet[0].length];
+        recursiveArrayTime = new long[dataSet.length][dataSet[0].length];
     }
 
     private static boolean sorted(int[] list) {
@@ -59,22 +59,22 @@ public class BenchmarkSorts {
                 if (!sorted(arrayA))
                     throw new UnsortedException("Recursive sort did not return a sorted array.\n");
 
-                rArrayCount[i][j] = heapSort.getCount();
-                rArrayTime[i][j] = heapSort.getTime();
+                recursiveArrayCount[i][j] = heapSort.getCount();
+                recursiveArrayTime[i][j] = heapSort.getTime();
                 heapSort.reset();
                 heapSort.iterativeSort(arrayB);
 
                 if (!sorted(arrayB))
                     throw new UnsortedException("Iterative sort did not return a sorted array.\n");
 
-                iArrayCount[i][j] = heapSort.getCount();
-                iArrayTime[i][j] = heapSort.getTime();
+                iterativeArrayCount[i][j] = heapSort.getCount();
+                iterativeArrayTime[i][j] = heapSort.getTime();
                 heapSort.reset();
             }
-            rArrayAverageCriticalOperationCount[i] = getAverage(rArrayCount[i]);
-            rArrayAverageExecutionTime[i] = getAverage(rArrayTime[i]);
-            iArrayAverageCriticalOperationCount[i] = getAverage(iArrayCount[i]);
-            iArrayAverageExecutionTime[i] = getAverage(iArrayTime[i]);
+            recursiveArrayAverageCriticalOperationCount[i] = getAverage(recursiveArrayCount[i]);
+            recursiveArrayAverageExecutionTime[i] = getAverage(recursiveArrayTime[i]);
+            iterativeArrayAverageCriticalOperationCount[i] = getAverage(iterativeArrayCount[i]);
+            iterativeArrayAverageExecutionTime[i] = getAverage(iterativeArrayTime[i]);
         }
 
     }
@@ -103,7 +103,10 @@ public class BenchmarkSorts {
     public VBox displayReport() {
         WebView myWebView = new WebView();
         WebEngine engine = myWebView.getEngine();
-        engine.loadContent("<html><body>" +
+        StringBuilder dataString = new StringBuilder();
+        VBox root = new VBox();
+
+        String top = "<html><body>" +
                 "\n<style type =\"text/css\">\n" +
                 ".tg  {border-collapse:collapse;border-spacing:0;}\n" +
                 ".tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}\n" +
@@ -127,59 +130,30 @@ public class BenchmarkSorts {
                 "    <td class=\"tg-73oq\">Coefficient of Variance of Count</td>\n" +
                 "    <td class=\"tg-73oq\">Average Execution Time</td>\n" +
                 "    <td class=\"tg-73oq\">Coefficient of Variance Time</td>\n" +
-                "  </tr>\n" +
-                "  <tr>\n" +
-                "    <td class=\"tg-73oq\"></td>\n" +
-                "    <td class=\"tg-73oq\"></td>\n" +
-                "    <td class=\"tg-73oq\"></td>\n" +
-                "    <td class=\"tg-73oq\"></td>\n" +
-                "    <td class=\"tg-73oq\"></td>\n" +
-                "    <td class=\"tg-73oq\"></td>\n" +
-                "    <td class=\"tg-73oq\"></td>\n" +
-                "    <td class=\"tg-73oq\"></td>\n" +
-                "    <td class=\"tg-73oq\"></td>\n" +
-                "  </tr>\n" +
-                "</table>" +
-                "</body></html>");
+                "  </tr>\n";
 
-        VBox root = new VBox();
+        for (int i = 0; i < dataSet.length; i++) {
+            dataString.append("<tr><td class=\"tg-73oq\">" + dataSet[i][0].length + "</td>");
+
+            dataString.append("<td class=\"tg-73oq\">" + iterativeArrayAverageCriticalOperationCount[i] + "</td>");
+            dataString.append("<td class=\"tg-73oq\">" + getCoefficientVariance(iterativeArrayCount[i]) + "</td>");
+            dataString.append("<td class=\"tg-73oq\">" + iterativeArrayAverageExecutionTime[i] + "</td>");
+            dataString.append("<td class=\"tg-73oq\">" + Math.round(getCoefficientVariance(iterativeArrayTime[i]) * 1000.0) / 1000.0 + "</td>");
+
+            dataString.append("<td class=\"tg-73oq\">" + recursiveArrayAverageCriticalOperationCount[i] + "</td>");
+            dataString.append("<td class=\"tg-73oq\">" + Math.round(getCoefficientVariance(recursiveArrayCount[i]) * 1000.0) / 1000.0 + "</td>");
+            dataString.append("<td class=\"tg-73oq\">" + recursiveArrayAverageExecutionTime[i] + "</td>");
+            dataString.append("<td class=\"tg-73oq\">" + Math.round(getCoefficientVariance(recursiveArrayTime[i]) * 1000.0) / 1000.0 + "</td></tr>");
+        }
+
+        String bottom = "\n</table></body></html>";
+
+        engine.loadContent(top + dataString + bottom);
+
         root.getChildren().addAll(myWebView);
 
         return root;
 
-        // TODO: Output to something pretty
-
-//        for (int i = 0; i < dataSet.length; i++) {
-//
-//            // Data set size n
-//            int dataSetSize = (dataSet[i][0].length);
-//
-//            // ITERATIVE
-//            // Average critical operation count
-//            long l1 = iArrayAverageCriticalOperationCount[i];
-//
-//            // Coefficient of variance of count
-//            double iterativeVarianceCount = getCoefficientVariance(iArrayCount[i]);
-//
-//            // Average execution time
-//            double averageIterativeExecutionTime = (iArrayAverageExecutionTime[i]);
-//
-//            // Coefficient of variance of time
-//            double iterativeCoefficientVariance = Math.round(getCoefficientVariance(iArrayTime[i]) * 1000.0) / 1000.0;
-//
-//            /// RECURSIVE
-//            // Average critical operation count
-//            long l = rArrayAverageCriticalOperationCount[i];
-//
-//            // Coefficient of variance of count
-//            double recursiveCountSd = Math.round(getCoefficientVariance(rArrayCount[i]) * 1000.0) / 1000.0;
-//
-//            // Average execution time
-//            double averageRecursiveExecutionTime = (rArrayAverageExecutionTime[i]);
-//
-//            // Coefficient of variance of time
-//            double recursiveCoefficientVariance = Math.round(getCoefficientVariance(rArrayTime[i]) * 1000.0) / 1000.0;
-//        }
     }
 
 

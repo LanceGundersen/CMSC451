@@ -13,7 +13,7 @@ public class SortMain extends Application {
 
         Application.launch(args);
 
-        //        jvmLoader.load();
+        jvmLoader.load();
 
         new SortMain();
 
@@ -21,14 +21,14 @@ public class SortMain extends Application {
 
     public void start(Stage stage) {
 
-        int[] dataSetSizes = new int[]{500, 1000, 1500, 2000};
+        int[] dataSetSizes = new int[]{500, 1000, 1500, 2000, 2500, 3000, 3500, 4000, 4500, 5000};
         BenchmarkSorts benchmarkSorts = new BenchmarkSorts(dataSetSizes);
         try {
             benchmarkSorts.runSorts();
 
             VBox root = benchmarkSorts.displayReport();
 
-            Scene scene = new Scene(root, 800, 400);
+            Scene scene = new Scene(root, 800, 600);
             stage.setScene(scene);
 
             stage.show();
@@ -53,6 +53,5 @@ public class SortMain extends Application {
             }
         }
     }
-
 
 }
