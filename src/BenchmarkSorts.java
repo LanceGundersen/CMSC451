@@ -2,9 +2,17 @@ import javafx.scene.layout.VBox;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 
+/**
+ * The HelloWorld program implements an application that
+ * simply displays "Hello World!" to the standard output.
+ *
+ * @author Lance Gundersen
+ * @version 1.0
+ * @since 2018-09-13
+ */
 public class BenchmarkSorts {
 
-    HeapSort heapSort;
+    private HeapSort heapSort;
 
     private int[][][] dataSet;
 
@@ -18,6 +26,14 @@ public class BenchmarkSorts {
     private long[][] recursiveArrayCount;
     private long[][] recursiveArrayTime;
 
+    /**
+     * Public method per UML.
+     * The BechmarkSorts method initializes the heapSort class and dataSet array.
+     * <p>
+     * The dataSet array is: 50 runs per project description.
+     *
+     * @param sizes DataSet array size
+     */
     BenchmarkSorts(int[] sizes) {
 
         heapSort = new HeapSort();
@@ -39,6 +55,10 @@ public class BenchmarkSorts {
         recursiveArrayTime = new long[dataSet.length][dataSet[0].length];
     }
 
+    /**
+     * @param list
+     * @return
+     */
     private static boolean sorted(int[] list) {
         for (int i = 0; i < list.length - 1; i++)
             if (list[i] > list[i + 1])
@@ -46,6 +66,12 @@ public class BenchmarkSorts {
         return true;
     }
 
+    /**
+     * Public method per UML.
+     * The runSorts method calls the heapSort method on the iterative and recursive arrays.
+     *
+     * @throws UnsortedException Check for unsorted array.
+     */
     public void runSorts() throws UnsortedException {
 
         for (int i = 0; i < dataSet.length; i++) {
@@ -79,12 +105,20 @@ public class BenchmarkSorts {
 
     }
 
+    /**
+     * @param data
+     * @return
+     */
     private long getAverage(long[] data) {
         long sum = 0;
         for (long aData : data) sum += aData;
         return (sum / data.length);
     }
 
+    /**
+     * @param data
+     * @return
+     */
     private double getCoefficientVariance(long[] data) {
         long mean = getAverage(data);
         long sum = 0;
@@ -93,6 +127,10 @@ public class BenchmarkSorts {
         return Math.sqrt(sum / (data.length - 1));
     }
 
+    /**
+     * @param size
+     * @return
+     */
     private int[] randomizedData(int size) {
         int[] data = new int[size];
         for (int i = 0; i < size; i++)
@@ -100,6 +138,12 @@ public class BenchmarkSorts {
         return data;
     }
 
+    /**
+     * Public method per UML.
+     * The displayReport method initializes the web view display and builds the html table for the results.
+     *
+     * @return VBox
+     */
     public VBox displayReport() {
         WebView myWebView = new WebView();
         WebEngine engine = myWebView.getEngine();
@@ -135,7 +179,7 @@ public class BenchmarkSorts {
         for (int i = 0; i < dataSet.length; i++) {
             dataString.append("<tr><td class=\"tg-73oq\">" + dataSet[i][0].length + "</td>");
 
-            dataString.append("<td class=\"tg-73oq\">" + iterativeArrayAverageCriticalOperationCount[i] + "</td>");
+            dataString.append("<td class=\"tg-73oq\">").append(iterativeArrayAverageCriticalOperationCount[i]).append("</td>");
             dataString.append("<td class=\"tg-73oq\">" + getCoefficientVariance(iterativeArrayCount[i]) + "</td>");
             dataString.append("<td class=\"tg-73oq\">" + iterativeArrayAverageExecutionTime[i] + "</td>");
             dataString.append("<td class=\"tg-73oq\">" + Math.round(getCoefficientVariance(iterativeArrayTime[i]) * 1000.0) / 1000.0 + "</td>");
