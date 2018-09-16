@@ -1,6 +1,5 @@
 /**
- * The HelloWorld program implements an application that
- * simply displays "Hello World!" to the standard output.
+ * Interface class.
  *
  * @author Lance Gundersen
  * @version 1.0
@@ -11,7 +10,7 @@ public interface SortInterface {
     /**
      * Public method per UML.
      *
-     * @param list This is the list to be sorted.
+     * @param list list to be sorted.
      * @throws UnsortedException Check for unsorted array.
      */
     void recursiveSort(int... list) throws UnsortedException;
@@ -19,7 +18,7 @@ public interface SortInterface {
     /**
      * Public method per UML.
      *
-     * @param list This is the list to be sorted.
+     * @param list list to be sorted.
      * @throws UnsortedException Check for unsorted array.
      */
     void iterativeSort(int... list) throws UnsortedException;

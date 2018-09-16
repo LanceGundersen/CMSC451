@@ -4,8 +4,12 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 /**
- * The HelloWorld program implements an application that
- * simply displays "Hello World!" to the standard output.
+ * The SortMain program implements an application that
+ * calculates the recursive and iterative version of the
+ * heapsort algorithm. It displays the Average Critical
+ * Operation Count, Coefficient of Variance of Count
+ * Average Execution Time, and Coefficient of Variance Time
+ * to a web application table view.
  *
  * @author Lance Gundersen
  * @version 1.0
@@ -19,7 +23,9 @@ public class SortMain extends Application {
 
     /**
      * Public method per UML.
-     * The main method which loads the application, initializes JVM warmup and initializes SortMain.
+     *
+     * Mmain method which loads the application, initializes
+     * JVM warmup and initializes SortMain.
      *
      * @param args Used for Application.launch
      */
@@ -34,7 +40,8 @@ public class SortMain extends Application {
     }
 
     /**
-     * Start method which initiates main benchmarkSorts method..
+     * Initiates main benchmarkSorts method..
+     * Initiates main benchmarkSorts method..
      *
      * @param stage Used for JavaFX scene.
      */

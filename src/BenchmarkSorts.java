@@ -3,8 +3,7 @@ import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 
 /**
- * The HelloWorld program implements an application that
- * simply displays "Hello World!" to the standard output.
+ * Class initializes the Sort class and dataSet array.
  *
  * @author Lance Gundersen
  * @version 1.0
@@ -28,8 +27,9 @@ public class BenchmarkSorts {
 
     /**
      * Public method per UML.
-     * The BechmarkSorts method initializes the heapSort class and dataSet array.
-     * <p>
+     *
+     * Class Constructor.
+     *
      * The dataSet array is: 50 runs per project description.
      *
      * @param sizes DataSet array size
@@ -56,8 +56,10 @@ public class BenchmarkSorts {
     }
 
     /**
-     * @param list
-     * @return
+     * Verifies input list is sorted
+     *
+     * @param list input list
+     * @return boolean
      */
     private static boolean sorted(int[] list) {
         for (int i = 0; i < list.length - 1; i++)
@@ -68,7 +70,8 @@ public class BenchmarkSorts {
 
     /**
      * Public method per UML.
-     * The runSorts method calls the heapSort method on the iterative and recursive arrays.
+     *
+     * Calls the heapSort method on the iterative and recursive arrays.
      *
      * @throws UnsortedException Check for unsorted array.
      */
@@ -106,8 +109,10 @@ public class BenchmarkSorts {
     }
 
     /**
-     * @param data
-     * @return
+     * Returns Average
+     *
+     * @param data input data
+     * @return average
      */
     private long getAverage(long[] data) {
         long sum = 0;
@@ -116,8 +121,10 @@ public class BenchmarkSorts {
     }
 
     /**
-     * @param data
-     * @return
+     * Returns Coefficient Variance
+     *
+     * @param data input data
+     * @return coefficient
      */
     private double getCoefficientVariance(long[] data) {
         long mean = getAverage(data);
@@ -128,8 +135,10 @@ public class BenchmarkSorts {
     }
 
     /**
-     * @param size
-     * @return
+     * Returns random integers
+     *
+     * @param size input size of data
+     * @return array of integers
      */
     private int[] randomizedData(int size) {
         int[] data = new int[size];
@@ -140,7 +149,8 @@ public class BenchmarkSorts {
 
     /**
      * Public method per UML.
-     * The displayReport method initializes the web view display and builds the html table for the results.
+     *
+     * Initializes the web view display and builds the html table for the results.
      *
      * @return VBox
      */
@@ -152,12 +162,16 @@ public class BenchmarkSorts {
 
         String top = "<html><body>" +
                 "\n<style type =\"text/css\">\n" +
+                ".header{text-align:center;}" +
                 ".tg  {border-collapse:collapse;border-spacing:0;}\n" +
                 ".tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}\n" +
                 ".tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}\n" +
                 ".tg .tg-baqh{text-align:center;vertical-align:top}\n" +
                 ".tg .tg-73oq{border-color:#000000;text-align:left;vertical-align:top}\n" +
                 "</style>\n" +
+                "<h2 class=\"header\">UMUC CMSC 451 Project 1</h2>\n" +
+                "<h2 class=\"header\">Lance Gundersen</h2>\n" +
+                "<h4 class=\"header\">16SEP2018</h4>" +
                 "<table class=\"tg\">\n" +
                 "  <tr>\n" +
                 "    <th class=\"tg-baqh\">Data Set Size n</th>\n" +
